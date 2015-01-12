@@ -1,0 +1,32 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HostParasiteSim", "HostParasiteSim.csproj", "{7616DD21-7EF1-4409-AFAA-05855B9AE232}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BioSimUI", "..\BioSimUI\BioSimUI.csproj", "{52459523-8A92-4C37-BF81-552F6138FCB3}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{7616DD21-7EF1-4409-AFAA-05855B9AE232}.Debug.ActiveCfg = Debug|.NET
+		{7616DD21-7EF1-4409-AFAA-05855B9AE232}.Debug.Build.0 = Debug|.NET
+		{7616DD21-7EF1-4409-AFAA-05855B9AE232}.Release.ActiveCfg = Release|.NET
+		{7616DD21-7EF1-4409-AFAA-05855B9AE232}.Release.Build.0 = Release|.NET
+		{52459523-8A92-4C37-BF81-552F6138FCB3}.Debug.ActiveCfg = Debug|.NET
+		{52459523-8A92-4C37-BF81-552F6138FCB3}.Debug.Build.0 = Debug|.NET
+		{52459523-8A92-4C37-BF81-552F6138FCB3}.Release.ActiveCfg = Release|.NET
+		{52459523-8A92-4C37-BF81-552F6138FCB3}.Release.Build.0 = Release|.NET
+	EndGlobalSection
+	GlobalSection(SolutionItems) = postSolution
+		HostParasiteSim.vsd = HostParasiteSim.vsd
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal
