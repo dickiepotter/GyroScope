@@ -54,6 +54,12 @@ namespace Gyroscope.Tests
             // 10 rows, 10 columns on a 0.001x100 host
             Grid grid = this.tenXtenGrid.CreateHost(0.001f, 100f);
 
+            (0.001 / 10).Should().Be(0.0001, "because we are testing the simple assumption that a calculation of 0.001 / 10 should not genrate rounding errors for c#");
+            (100 / 10).Should().Be(10, "because we are testing the simple assumption that a calculation of 100 / 10 should not genrate rounding errors for c#");
+
+            (0.001f / 10f).Should().Be(0.0001f, "because we are testing the simple assumption that a calculation of 0.001 / 10 should not genrate rounding errors for c# using floats");
+            (100f / 10f).Should().Be(10f, "because we are testing the simple assumption that a calculation of 100 / 10 should not genrate rounding errors for c# using floats");
+
             grid.RowCount.Should().Be(10, "because we are making a 10x10 grid");
             grid.ColumnCount.Should().Be(10, "because we are making a 10x10 grid");
             grid.CellSize.Width.Should().Be(0.0001f, "because a width of 0.001f divided by 10 columns in the grid is 0.001f");
