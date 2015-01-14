@@ -2,6 +2,8 @@
 
 namespace Gyroscope.Tests
 {
+    using FluentAssertions;
+
     [TestClass]
     public class HostFactoryTest
     {
@@ -50,13 +52,13 @@ namespace Gyroscope.Tests
         public void UnevenGrid()
         {
             // 10 rows, 10 columns on a 0.001x100 host
-            Grid grid = tenXtenGrid.CreateHost(0.001f, 100);
+            Grid grid = this.tenXtenGrid.CreateHost(0.001f, 100f);
 
-            Assert.AreEqual(grid.RowCount, 10);
-            Assert.AreEqual(grid.ColumnCount, 10);
-            Assert.AreEqual(grid.CellSize.Width, 0.0001f);
-            Assert.AreEqual(grid.CellSize.Length, 10);
-            Assert.AreEqual(grid.CellCount, 100);
+            grid.RowCount.Should().Be(10, "because we are making a 10x10 grid");
+            grid.ColumnCount.Should().Be(10, "because we are making a 10x10 grid");
+            grid.CellSize.Width.Should().Be(0.0001f, "because a width of 0.001f divided by 10 columns in the grid is 0.001f");
+            grid.CellSize.Length.Should().Be(10f, "because a length of 100f divided by 10 rows in the grid is 10");
+            grid.CellCount.Should().Be(100, "because a 10x10 grid is a simple multiplication resulting in 100");
         }
 
         [TestMethod]
