@@ -2,11 +2,24 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net48</TargetFramework>
+    <!--
+      Multi-targeted so the simulation engine can run on both the original
+      .NET Framework CLR (net48) and modern .NET (net8.0). The regression test
+      runs against both to prove a fixed seed produces identical output.
+    -->
+    <TargetFrameworks>net48;net8.0</TargetFrameworks>
     <RootNamespace>HostParasiteSim</RootNamespace>
     <AssemblyName>HostParasiteSim</AssemblyName>
-    <!-- Preserve the original behaviour: this project never had an AssemblyInfo.cs. -->
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0'">
+    <!--
+      Thread.Abort() (used only by the unused ImmediateHalt() path) is obsolete
+      on modern .NET and throws at runtime, but still compiles. The simulation
+      never calls it; silence the obsoletion warning for the net8.0 build.
+    -->
+    <NoWarn>$(NoWarn);SYSLIB0006</NoWarn>
   </PropertyGroup>
 
 </Project>

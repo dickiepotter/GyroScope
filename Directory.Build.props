@@ -13,7 +13,7 @@
     The reference-assemblies package lets the projects build with only the
     .NET SDK installed (no Visual Studio / Framework targeting pack required).
   -->
-  <ItemGroup>
+  <ItemGroup Condition="$(TargetFramework.StartsWith('net4'))">
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
   </ItemGroup>
 
