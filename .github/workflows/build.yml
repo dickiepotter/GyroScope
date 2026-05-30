@@ -25,10 +25,5 @@ jobs:
       - name: Build
         run: dotnet build GyroScope.slnx --configuration Release --no-restore
 
-      # Five tests fail for pre-existing reasons (float-rounding assumptions and
-      # Move tests asserting an RNG mapping the code never implemented), so the
-      # run is reported but not yet gating. Remove "continue-on-error" once the
-      # test expectations have been corrected.
       - name: Test
-        continue-on-error: true
         run: dotnet test GyroScope.slnx --configuration Release --no-build --logger "console;verbosity=normal"
