@@ -149,23 +149,44 @@ function render() {
     const frame = result.frames[frameIndex];
     if (!frame) return;
 
+    // A lineage shares one Position object in the engine, so many parasites sit
+    // on the exact same coordinate. Group co-located parasites, fan them out into
+    // a small cluster so individuals are visible, and badge the count — this is a
+    // display aid only; it does not alter the simulation data.
+    const groups = new Map();
     let sumC = 0;
     let sumR = 0;
     for (const par of frame.p) {
-        const px = pad + (par.x / result.width) * arenaW;
-        // Invert Y so the origin sits at the bottom-left.
-        const py = pad + arenaH - (par.y / result.length) * arenaH;
-        const radius = 3 + 5 * Math.sqrt(Math.max(0, par.r) / maxResources);
-
-        ctx.beginPath();
-        ctx.fillStyle = colourFor(par.c);
-        ctx.globalAlpha = 0.9;
-        ctx.arc(px, py, radius, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.globalAlpha = 1;
-
+        const key = par.x + '|' + par.y;
+        let g = groups.get(key);
+        if (!g) { g = { x: par.x, y: par.y, members: [] }; groups.set(key, g); }
+        g.members.push(par);
         sumC += par.c;
         sumR += par.r;
+    }
+
+    for (const g of groups.values()) {
+        const cx = pad + (g.x / result.width) * arenaW;
+        const cy = pad + arenaH - (g.y / result.length) * arenaH;
+        const count = g.members.length;
+
+        if (count === 1) {
+            const m = g.members[0];
+            drawParasite(cx, cy, m, 3 + 5 * Math.sqrt(Math.max(0, m.r) / maxResources));
+            continue;
+        }
+
+        // Fan the members out on a phyllotaxis spiral around the shared point.
+        const spacing = 4.5;
+        let spread = 0;
+        g.members.forEach((m, i) => {
+            const angle = i * 2.3999632; // golden angle (radians)
+            const r = spacing * Math.sqrt(i);
+            if (r > spread) spread = r;
+            drawParasite(cx + r * Math.cos(angle), cy + r * Math.sin(angle), m, 3);
+        });
+
+        drawCountBadge(cx, Math.max(pad + 10, cy - spread - 12), count);
     }
 
     const n = frame.p.length;
@@ -173,6 +194,42 @@ function render() {
     statPop.textContent = n;
     statCon.textContent = n ? (sumC / n).toFixed(2) : '–';
     statRes.textContent = n ? (sumR / n).toFixed(2) : '–';
+}
+
+function drawParasite(px, py, par, radius) {
+    ctx.beginPath();
+    ctx.fillStyle = colourFor(par.c);
+    ctx.globalAlpha = 0.9;
+    ctx.arc(px, py, radius, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+}
+
+function drawCountBadge(cx, cy, count) {
+    const label = '×' + count;
+    ctx.font = '600 12px -apple-system, "Segoe UI", Roboto, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    const w = ctx.measureText(label).width + 12;
+    const h = 17;
+    pill(cx - w / 2, cy - h / 2, w, h, h / 2);
+    ctx.fillStyle = 'rgba(13,17,23,0.88)';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255,255,255,0.28)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    ctx.fillStyle = '#e6edf3';
+    ctx.fillText(label, cx, cy + 0.5);
+}
+
+function pill(x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
 }
 
 // --- Controls ---
