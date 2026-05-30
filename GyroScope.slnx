@@ -1,5 +1,6 @@
 <Solution>
   <Project Path="BioSimUI/BioSimUI.csproj" />
+  <Project Path="BioSimWeb/BioSimWeb.csproj" />
   <Project Path="Gyroscope.Tests/Gyroscope.Tests.csproj" />
   <Project Path="HostParasiteSim/HostParasiteSim.csproj" />
 </Solution>

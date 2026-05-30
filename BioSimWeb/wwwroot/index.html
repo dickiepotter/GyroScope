@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gyro-Scope — Infection Visualiser</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <header>
+        <h1>Gyro<span>-Scope</span></h1>
+        <p class="tag">Agent-based gyrodactylid infection dynamics &mdash; live visualiser</p>
+    </header>
+
+    <main>
+        <aside class="panel">
+            <form id="params">
+                <fieldset>
+                    <legend>Host</legend>
+                    <label>Width <input type="number" name="hostWidth" value="10" step="any" min="0.001"></label>
+                    <label>Length <input type="number" name="hostLength" value="10" step="any" min="0.001"></label>
+                    <label>Columns <input type="number" name="columns" value="10" min="1" step="1"></label>
+                    <label>Rows <input type="number" name="rows" value="10" min="1" step="1"></label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Immune response</legend>
+                    <label>Min resource gain <input type="number" name="minResourceGain" value="0.5" step="any"></label>
+                    <label>Normal resource gain <input type="number" name="normalResourceGain" value="1" step="any"></label>
+                    <label>Immunity damage <input type="number" name="immunityDamage" value="1" step="any"></label>
+                    <label>Immuno decay (%) <input type="number" name="immunoDecay" value="10" step="any"></label>
+                    <label>Immuno competence <input type="number" name="immunoCompetence" value="50" step="any"></label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Parasite</legend>
+                    <label>Constitution <input type="number" name="constitution" value="10" step="any" min="0.001"></label>
+                    <label>Initial resources <input type="number" name="initialResources" value="0" step="any"></label>
+                    <label>Gestation (reproduction req.) <input type="number" name="reproductionReq" value="10" step="any" min="0.001"></label>
+                    <label>Move distance <input type="number" name="moveDistance" value="1" step="any" min="0"></label>
+                    <label>Initial parasites <input type="number" name="initialParasites" value="2" min="1" max="200" step="1"></label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Run</legend>
+                    <label>Duration (timesteps) <input type="number" name="duration" value="40" min="1" max="500" step="1"></label>
+                    <label>Repetitions <input type="number" name="repetitions" value="1" min="1" max="20" step="1"></label>
+                    <label>Seed <span class="hint">(&minus;1 = random)</span> <input type="number" name="seed" value="12345" step="1"></label>
+                </fieldset>
+
+                <button type="submit" id="runBtn">Run simulation &#9654;</button>
+                <label class="checkbox"><input type="checkbox" id="autoRun"> Re-run automatically on edit</label>
+                <p class="note" id="liveNote">
+                    Editing a value re-runs the whole simulation (a few milliseconds) and restarts the
+                    animation. Editing a <em>running</em> simulation in place is not supported &mdash; that
+                    would require changing the simulation engine, which is kept untouched.
+                </p>
+            </form>
+        </aside>
+
+        <section class="stage">
+            <div id="error" class="error" hidden></div>
+            <div id="truncated" class="warn" hidden>Output was truncated (population grew very large); the animation may be incomplete.</div>
+
+            <canvas id="arena" width="640" height="640"></canvas>
+
+            <div class="controls">
+                <button id="playBtn" title="Play / pause">&#10073;&#10073;</button>
+                <button id="restartBtn" title="Restart">&#8634;</button>
+                <input type="range" id="scrub" min="0" max="0" value="0" />
+                <div class="speed">
+                    <span>Speed</span>
+                    <input type="range" id="speed" min="1" max="60" value="10" />
+                    <span id="speedVal">10 fps</span>
+                </div>
+            </div>
+
+            <div class="stats">
+                <div><span class="k">Timestep</span><span class="v" id="statTime">&ndash;</span></div>
+                <div><span class="k">Population</span><span class="v" id="statPop">&ndash;</span></div>
+                <div><span class="k">Avg constitution</span><span class="v" id="statCon">&ndash;</span></div>
+                <div><span class="k">Avg resources</span><span class="v" id="statRes">&ndash;</span></div>
+                <div><span class="k">Seed</span><span class="v" id="statSeed">&ndash;</span></div>
+            </div>
+
+            <div class="legend">
+                <span class="swatch high"></span> healthy
+                <span class="swatch mid"></span> damaged
+                <span class="swatch low"></span> near death
+                <span class="sep"></span>
+                dot size &#8776; resources held
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
