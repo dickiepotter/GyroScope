@@ -177,14 +177,18 @@ function render() {
         }
 
         // Fan the members out on a phyllotaxis spiral around the shared point.
+        // Cap how many dots we actually draw so a huge cluster stays fast and on
+        // screen; the badge always reports the true count.
+        const maxDots = 60;
+        const drawn = Math.min(count, maxDots);
         const spacing = 4.5;
         let spread = 0;
-        g.members.forEach((m, i) => {
+        for (let i = 0; i < drawn; i++) {
             const angle = i * 2.3999632; // golden angle (radians)
             const r = spacing * Math.sqrt(i);
             if (r > spread) spread = r;
-            drawParasite(cx + r * Math.cos(angle), cy + r * Math.sin(angle), m, 3);
-        });
+            drawParasite(cx + r * Math.cos(angle), cy + r * Math.sin(angle), g.members[i], 3);
+        }
 
         drawCountBadge(cx, Math.max(pad + 10, cy - spread - 12), count);
     }

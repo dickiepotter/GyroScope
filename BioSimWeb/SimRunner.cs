@@ -59,13 +59,25 @@ internal sealed class FrameCollector : ISimulationOutput
 
     public bool Truncated { get; private set; }
 
+    /// <summary>
+    /// Invoked once, the first time the row cap is reached, so the caller can stop
+    /// the run. Without this the simulation would keep processing an exponentially
+    /// growing population long after we have stopped recording it.
+    /// </summary>
+    public Action? OnLimitReached { get; set; }
+
     public FrameCollector(int maxRows) => this.maxRows = maxRows;
 
     public void Add(int simulation, int time, int parasite, float xPosition, float yPosition, float resources, float constitution)
     {
         if (this.rows.Count >= this.maxRows)
         {
-            this.Truncated = true;
+            if (!this.Truncated)
+            {
+                this.Truncated = true;
+                this.OnLimitReached?.Invoke();
+            }
+
             return;
         }
 
@@ -113,7 +125,7 @@ public static class SimRunner
     private const int MaxDuration = 500;
     private const int MaxInitialParasites = 200;
     private const int MaxRepetitions = 20;
-    private const int MaxRows = 300_000;
+    private const int MaxRows = 60_000;
     private static readonly TimeSpan RunTimeout = TimeSpan.FromSeconds(30);
 
     public static SimResult Run(SimParameters p)
@@ -143,6 +155,17 @@ public static class SimRunner
         var model = new Model(p.Repetitions, simFactory, p.Seed);
 
         var collector = new FrameCollector(MaxRows);
+
+        // When the output cap is hit, ask the simulation to stop at the next
+        // timestep boundary so a runaway population cannot keep growing unbounded.
+        collector.OnLimitReached = () =>
+        {
+            if (model.Status.Status == Execution.State.RUNNING)
+            {
+                model.Status.Stop();
+            }
+        };
+
         using var finished = new ManualResetEventSlim(false);
 
         model.Status.ExecutionEvent += (_, e) =>
