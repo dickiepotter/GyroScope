@@ -13,13 +13,4 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0'">
-    <!--
-      Thread.Abort() (used only by the unused ImmediateHalt() path) is obsolete
-      on modern .NET and throws at runtime, but still compiles. The simulation
-      never calls it; silence the obsoletion warning for the net8.0 build.
-    -->
-    <NoWarn>$(NoWarn);SYSLIB0006</NoWarn>
-  </PropertyGroup>
-
 </Project>

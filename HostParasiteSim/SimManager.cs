@@ -193,9 +193,27 @@ public class Model
 	/// <summary>
 	/// Cleanly aborts running simulations.
 	/// </summary>
+	/// <remarks>
+	/// Asks the simulation loop to stop at the next time-step boundary and waits
+	/// briefly for the thread to unwind. The original implementation called
+	/// Thread.Abort(), which is unsupported on modern .NET; this cooperative
+	/// shutdown works on both runtimes and does not affect the simulation output.
+	/// </remarks>
 	public void ImmediateHalt()
 	{
-		executionThread.Abort();
+		Thread thread = executionThread;
+
+		if( thread != null && thread.IsAlive )
+		{
+			if( executionStatus.Status == Execution.State.RUNNING
+				|| executionStatus.Status == Execution.State.PAUSED )
+			{
+				executionStatus.Stop();
+			}
+
+			thread.Join( TimeSpan.FromSeconds(5) );
+		}
+
 		executionStatus = new Execution();
 		resetSim();
 	}

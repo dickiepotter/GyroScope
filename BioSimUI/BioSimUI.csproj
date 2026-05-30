@@ -2,31 +2,32 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net48</TargetFramework>
+    <!--
+      The UI runs on both the original .NET Framework (net48) and modern .NET
+      (net8.0-windows). The forms were rewritten to use DataGridView / ToolStrip
+      / StatusStrip, which exist on both runtimes, so a single source builds for
+      each. WinForms on modern .NET is Windows-only.
+    -->
+    <TargetFrameworks>net48;net8.0-windows</TargetFrameworks>
     <RootNamespace>BioSimUI</RootNamespace>
     <AssemblyName>BioSimUI</AssemblyName>
     <StartupObject>BioSimUI.simSetup</StartupObject>
     <!-- AssemblyInfo.cs is kept and maintained by hand. -->
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <!--
-      The legacy WinForms .resx files embed binary resources (toolbar image
-      list, icons) that were serialised with BinaryFormatter. The modern SDK
-      build pipeline reads them through System.Resources.Extensions instead.
-      This only affects how UI resources are (de)serialised, not the simulation.
-    -->
-    <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
   </PropertyGroup>
 
-  <ItemGroup>
+  <!-- WinForms enablement for the modern .NET target. -->
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-windows'">
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <!-- Framework assemblies are referenced explicitly only on .NET Framework;
+       on net8.0-windows they are provided by the Windows Desktop shared framework. -->
+  <ItemGroup Condition="$(TargetFramework.StartsWith('net4'))">
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <!-- Runtime support for the preserialized WinForms resources (see above). -->
-    <PackageReference Include="System.Resources.Extensions" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
