@@ -1,0 +1,20 @@
+<Project>
+
+  <!--
+    Shared build settings for all projects in the repository.
+
+    The solution deliberately remains on the .NET Framework CLR (net48) rather
+    than migrating to modern .NET. This is a scientific prototype and the
+    runtime (System.Random algorithm, floating-point / JIT behaviour) must not
+    change, or the simulation output data would change with it. net48 is the
+    in-support successor to the original net45 target and runs on the very same
+    CLR the code already executes on under Windows.
+
+    The reference-assemblies package lets the projects build with only the
+    .NET SDK installed (no Visual Studio / Framework targeting pack required).
+  -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+  </ItemGroup>
+
+</Project>
