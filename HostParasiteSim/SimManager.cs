@@ -360,11 +360,7 @@ public class Model
 
 		if( this.throwSimulationEvents )
 		{
-			try
-			{
-				ParasiteEvent( this, new ParasiteEventArgs( parasite, timestep, host ) );
-			}
-			catch( NullReferenceException ){/* No one to pick up the event */ }
+			ParasiteEvent?.Invoke( this, new ParasiteEventArgs( parasite, timestep, host ) );
 		}
 	}
 

@@ -118,7 +118,7 @@ public class Execution
 			status = value;
 			
 			// Fire event to notify a state change occurence
-			ExecutionEvent( this, args );
+			ExecutionEvent?.Invoke( this, args );
 		}
 	}
 
@@ -166,7 +166,7 @@ public class Execution
 		status = State.STOPPED;
 			
 		// Fire event to notify a state change occurence
-		ExecutionEvent( this, args );
+		ExecutionEvent?.Invoke( this, args );
 	}
 
 	#endregion

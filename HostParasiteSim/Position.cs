@@ -27,6 +27,16 @@ public class Position
 	/// </remarks>
 	private Random randomGenerator = null;
 
+	/// <summary>
+	/// A single shared generator backs the convenience constructors that are not
+	/// given an explicit generator, fulfilling this class's stated design intent
+	/// of one generator for all random numbers. Creating a fresh Random() per
+	/// instance would seed Positions created within the same tick identically
+	/// (the seed is time-based) and correlate their movement. The simulation
+	/// always injects its own seeded generator, so this does not affect output.
+	/// </summary>
+	private static readonly Random sharedRandomGenerator = new Random();
+
 	#endregion
 
 	#region Constructor(s)
@@ -40,7 +50,7 @@ public class Position
 	/// <param name="y">The initial position on the y axis</param>
 	public Position( Rectangle border, float moveDistance, float x, float y) 
 	{
-		this.randomGenerator	= new Random();
+		this.randomGenerator	= sharedRandomGenerator;
 		this.moveDistance		= moveDistance;
 		this.border				= border;
 		this.x					= x;
@@ -71,7 +81,7 @@ public class Position
 	/// <param name="moveDistance">The distance a move can cover in one timestep</param>
 	public Position( Rectangle border, float moveDistance )
 	{
-		randomGenerator		= new Random();
+		randomGenerator		= sharedRandomGenerator;
 		this.moveDistance	= moveDistance;
 		this.border			= border;
 
