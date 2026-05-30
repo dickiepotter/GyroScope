@@ -4,6 +4,8 @@ using System;
 
 #endregion
 
+namespace HostParasiteSim;
+
 /// <summary>
 /// Object to represents a 2D position / co-ordinate
 /// </summary>

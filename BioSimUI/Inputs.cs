@@ -1,6 +1,7 @@
 #region Imports
 
 using System;
+using HostParasiteSim;
 using System.Drawing;
 using System.Collections;
 using System.ComponentModel;

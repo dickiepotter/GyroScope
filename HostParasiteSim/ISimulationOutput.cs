@@ -1,5 +1,7 @@
 using System;
 
+namespace HostParasiteSim;
+
 public interface ISimulationOutput
 {
 	void Add

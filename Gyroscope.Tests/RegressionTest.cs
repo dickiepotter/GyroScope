@@ -9,6 +9,7 @@ namespace Gyroscope.Tests
     using System.Text;
     using System.Threading;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using HostParasiteSim;
 
     /// <summary>
     /// Golden-master regression test guarding the simulation's numerical output.

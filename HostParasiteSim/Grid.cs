@@ -4,6 +4,8 @@ using System;
 
 #endregion
 
+namespace HostParasiteSim;
+
 /// <summary>
 /// This object defines a two dimensional grid.
 /// </summary>

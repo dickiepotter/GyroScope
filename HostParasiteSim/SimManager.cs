@@ -6,6 +6,8 @@ using System.Threading;
 
 #endregion
 
+namespace HostParasiteSim;
+
 /// <summary>
 /// An immutable object representing a host-parasite dynamics model for simulation.
 /// Encapsulates an execution thread used to allow parameter changes during execution of the simulation loop

@@ -11,6 +11,8 @@
     <RootNamespace>HostParasiteSim</RootNamespace>
     <AssemblyName>HostParasiteSim</AssemblyName>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <!-- Enables file-scoped namespaces; purely syntactic, so it applies to net48 too. -->
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
 </Project>

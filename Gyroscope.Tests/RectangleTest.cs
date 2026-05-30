@@ -5,6 +5,7 @@ namespace Gyroscope.Tests
     using FluentAssertions;
 
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using HostParasiteSim;
 
     [TestClass]
     public class RectangleTest

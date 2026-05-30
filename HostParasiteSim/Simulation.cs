@@ -5,6 +5,8 @@ using System.Collections;
 
 #endregion
 
+namespace HostParasiteSim;
+
 /// <summary>
 /// This object represents a single simulation storing the host and parasites and running the interactions between them.
 /// </summary>

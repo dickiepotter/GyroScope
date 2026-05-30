@@ -1,6 +1,7 @@
 namespace Gyroscope.Tests
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using HostParasiteSim;
 
     [TestClass]
     public class PositionTest

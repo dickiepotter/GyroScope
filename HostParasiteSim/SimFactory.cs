@@ -4,6 +4,8 @@ using System;
 
 #endregion
 
+namespace HostParasiteSim;
+
 /// <summary>
 /// Immutable object which creates Simulation instances.
 /// </summary>

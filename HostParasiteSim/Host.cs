@@ -4,6 +4,8 @@ using System;
 
 #endregion
 
+namespace HostParasiteSim;
+
 /// <summary>
 /// Representation of a host (such as a fish) which has an immune response to parasites.
 /// The host is the bounds and immuno-response grid on which parasites can move, thus it extends Grid.

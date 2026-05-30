@@ -4,6 +4,8 @@ using System;
 
 #endregion
 
+namespace HostParasiteSim;
+
 /// <summary>
 /// Object to represent a 2D rectangle with an origin of 0,0
 /// </summary>

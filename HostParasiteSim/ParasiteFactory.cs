@@ -5,6 +5,8 @@ using System.Collections;
 
 #endregion
 
+namespace HostParasiteSim;
+
 /// <summary>
 /// Object which creates Parasite instances
 /// </summary>
