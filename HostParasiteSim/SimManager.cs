@@ -340,7 +340,7 @@ public class Model
 			);
 		}
 
-		if( this.throwSimulationEvents = true )
+		if( this.throwSimulationEvents )
 		{
 			try
 			{
