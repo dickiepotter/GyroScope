@@ -184,3 +184,6 @@ UpgradeLog*.htm
 
 # Microsoft Fakes
 FakesAssemblies/
+
+# Local VS launch profiles (machine-specific)
+launchSettings.json
