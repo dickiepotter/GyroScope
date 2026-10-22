@@ -40,3 +40,7 @@ University of Hull
 **Richard Potter**  
 Computer Science  
 University of Hull  
+
+## Licence and disclaimer
+
+This is a personal project shared by Richard Potter in the hope it's useful (written with Helen Wright, based on an algorithm by Cock van Oosterhout and Joanne Cable). It's free to use under the GNU General Public License v2 (see [LICENSE](LICENSE)). It's provided as is: I make no promises that it works or suits your purpose, and I take no responsibility for anything that happens from using it. It isn't a product of, or supported by, any company I work for.
